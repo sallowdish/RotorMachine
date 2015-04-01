@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by rui.zheng on 31/03/2015.
- */
 public class Rotor {
-    ArrayList<Integer> inputPanel=null;
+//    ArrayList<Integer> inputPanel=null;
     ArrayList<Integer> outputPanel=null;
 
     private int hitCounter=0;
-    final int NUM_PIN=30;
+    final int NUM_PIN=57; //subset of asiic table from 'A' to 'z'
     Rotor previousRotor=null;
 
     //Indicating if rotor rotates for each input or trigger by other rotor
@@ -27,10 +24,10 @@ public class Rotor {
     }
 
     //Initialize Rotor with configuration
-    public Rotor(HashMap<String,List<Integer>> m){
+    public Rotor(HashMap<String,List<Integer>> m) throws Exception{
         try {
-            inputPanel=new ArrayList<>(m.get("input"));
-            outputPanel=new ArrayList<>(m.get("output"));
+//            inputPanel=new ArrayList<Integer>(m.get("input"));
+            outputPanel=new ArrayList<Integer>(m.get("output"));
         }catch (Exception e)
         {
             System.err.println("Invalid rotor configuration:" + e.getMessage());
@@ -38,13 +35,24 @@ public class Rotor {
         }
     }
 
-    public Integer translate(Integer in){
+    public Integer encrypt(Integer in) throws Exception{
         try {
-            Integer out=outputPanel.get(inputPanel.indexOf(in));
+            Integer out=outputPanel.get(in);
             if (isInitialRotor){hit();}
             return out;
         }catch (Exception e){
-            System.err.println("Fail to translate input:" + e.getMessage());
+            System.err.println("Fail to encrypt input:" + e.getMessage());
+            throw e;
+        }
+    }
+
+    public Integer decrypt(Integer in) throws Exception{
+        try {
+            Integer out=outputPanel.indexOf(in);
+            if (isInitialRotor){hit();}
+            return out;
+        }catch (Exception e){
+            System.err.println("Fail to decrypt input:" + e.getMessage());
             throw e;
         }
     }
@@ -54,8 +62,8 @@ public class Rotor {
         hitCounter++;
 
         //shift outputPanel to emulate rotating of rotors
-//        outputPanel.add(outputPanel.get(0));
-//        outputPanel.remove(0);
+        outputPanel.add(outputPanel.get(0));
+        outputPanel.remove(0);
         //pass carriers
         if(isFullRevolution()){
             hitCounter=0;
