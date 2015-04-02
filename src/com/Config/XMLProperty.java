@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Properties;
 
 
@@ -37,27 +36,46 @@ public class XMLProperty {
 //        System.out.print();
     }
 
-    public static HashMap<String,String> loadEncryptionSchema(Integer secretKey) throws Exception{
-        HashMap<String,String> schema;
+//    public static HashMap<String,String> loadEncryptionSchema(Integer secretKey) throws Exception{
+//        HashMap<String,String> schema;
+//        try {
+//            final Properties prop=new Properties();
+//            Integer index=secretKey%N;
+//            FileInputStream file=new FileInputStream(System.getProperty("user.dir")+"/resources/Encryption_Schema_"+index.toString()+".xml");
+//            prop.loadFromXML(file);
+//            file.close();
+//
+//            schema=new HashMap<String, String>(){{
+//                for(String key:prop.stringPropertyNames()){
+//                    put(key,prop.getProperty(key));
+//                }
+//            }};
+//            prop.list(System.out);
+//            System.out.println(schema.toString());
+//        }catch (Exception e){
+//            System.err.println("Fail to load Propertied:"+e.getMessage());
+//            throw e;
+//        }
+//        return schema;
+//    }
+
+    public static Properties loadEncryptionSchema(Integer secretKey) throws Exception{
+        final Properties prop;
         try {
-            final Properties prop=new Properties();
+            prop=new Properties();
             Integer index=secretKey%N;
             FileInputStream file=new FileInputStream(System.getProperty("user.dir")+"/resources/Encryption_Schema_"+index.toString()+".xml");
             prop.loadFromXML(file);
             file.close();
 
-            schema=new HashMap<String, String>(){{
-                for(String key:prop.stringPropertyNames()){
-                    put(key,prop.getProperty(key));
-                }
-            }};
-            prop.list(System.out);
-            System.out.println(schema.toString());
+
+//            prop.list(System.out);
+//            System.out.println(schema.toString());
         }catch (Exception e){
             System.err.println("Fail to load Propertied:"+e.getMessage());
             throw e;
         }
-        return schema;
+        return prop;
     }
 
     public static void main(String args[]) throws Exception{
