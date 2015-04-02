@@ -3,7 +3,6 @@ package com.Config;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -27,7 +26,10 @@ public class XMLProperty {
             permutationList.add(permutation);
         }
         prop.setProperty("r", r.toString());
-        prop.setProperty("Permutations", permutationList.toString());
+        prop.setProperty("N",N.toString());
+        for(Integer i=0;i<r;i++){
+            prop.setProperty("Permutation_"+i.toString(), permutationList.get(i).toString());
+        }
         FileOutputStream file=new FileOutputStream(System.getProperty("user.dir")+"/resources/Encryption_Schema_"+index.toString()+".xml");
         prop.storeToXML(file, "Schema_" + secretKey.toString());
 //        prop.list(System.out);
@@ -60,6 +62,7 @@ public class XMLProperty {
 
     public static void main(String args[]) throws Exception{
         for (Integer i=0;i<N;i++){
+            generateNewSchema(2,i);
             loadEncryptionSchema(i);
         }
     }
