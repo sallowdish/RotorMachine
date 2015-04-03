@@ -49,7 +49,7 @@ public class SecuredClient {
                     if(fromUser.equals("CLIENT_READY")){
                         fromUser=sp.processInput("INIT"+sp.DELIMITER+"@");
                     }else{
-                        System.out.println("com.Client:" + fromUser);
+                        System.out.println("Client:" + fromUser);
                     }
                     out.println(fromUser);
                 }
