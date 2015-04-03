@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="RotorMachine:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/RotorMachine_jar</output-path>
+    <root id="archive" name="RotorMachine.jar">
+      <element id="module-output" name="RotorMachine" />
+    </root>
+  </artifact>
+</component>
