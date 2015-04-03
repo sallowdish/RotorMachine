@@ -49,7 +49,7 @@ public class EnigmaMachine {
     public String encrypt(String message) throws Exception{
         ArrayList<Integer> input=KeyValueMap.mapStringToValues(message);
         ArrayList<Integer> output=new ArrayList<Integer>();
-        for (Integer i:input){
+        for (Integer i=0;i<input.size();i++){
             Integer temp=input.get(i);
             for(Rotor rotor:rotors){
                 temp=rotor.encrypt(temp);
@@ -62,7 +62,7 @@ public class EnigmaMachine {
     public String decrypt(String ciphertext) throws Exception{
         ArrayList<Integer> input=KeyValueMap.mapStringToValues(ciphertext);
         ArrayList<Integer> output=new ArrayList<Integer>();
-        for (Integer i:input){
+        for (Integer i=0;i<input.size();i++){
             Integer temp=input.get(i);
             for(Integer j=rotors.size()-1;j>=0;j--){
                 Rotor reverseRotor=rotors.get(j);
