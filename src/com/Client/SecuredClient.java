@@ -46,10 +46,8 @@ public class SecuredClient {
 //                    break;
                 fromUser=sp.processInput(fromServer);
                 if (fromUser != null) {
-                    if(fromUser.equals("CLIENT_READY")){
-                        fromUser=sp.processInput("INIT"+sp.DELIMITER+"@");
-                    }else{
-                        System.out.println("Client:" + fromUser);
+                    if(fromUser.equals("CLIENT_READY")) {
+                        fromUser = sp.processInput("INIT" + sp.DELIMITER + "@");
                     }
                     out.println(fromUser);
                 }
