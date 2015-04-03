@@ -1,8 +1,8 @@
 package com.Config;
 
 
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Properties;
@@ -64,7 +64,8 @@ public class XMLProperty {
         try {
             prop=new Properties();
             Integer index=secretKey%N;
-            FileInputStream file=new FileInputStream(System.getProperty("user.dir")+"/resources/Encryption_Schema_"+index.toString()+".xml");
+            InputStream file=EncryptionSchema.class.getResourceAsStream("Encryption_Schema_"+index.toString()+".xml");
+
             prop.loadFromXML(file);
             file.close();
 
@@ -78,10 +79,10 @@ public class XMLProperty {
         return prop;
     }
 
-    public static void main(String args[]) throws Exception{
-        for (Integer i=0;i<N;i++){
-            generateNewSchema(2,i);
-            loadEncryptionSchema(i);
-        }
-    }
+//    public static void main(String args[]) throws Exception{
+//        for (Integer i=0;i<N;i++){
+//            generateNewSchema(2,i);
+//            loadEncryptionSchema(i);
+//        }
+//    }
 }
