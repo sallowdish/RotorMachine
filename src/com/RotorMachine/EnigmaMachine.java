@@ -36,8 +36,8 @@ public class EnigmaMachine {
             rotors.add(rotor);
         }
         //Link rotors together
-        for (Integer i=0;i<r-1;i++){
-            rotors.get(i).previousRotor=rotors.get(i+1);
+        for (Integer i=rotors.size()-1;i>=1;i--){
+            rotors.get(i).previousRotor=rotors.get(i-1);
         }
 
         //Set last Roter to be the fastest one
@@ -46,12 +46,31 @@ public class EnigmaMachine {
 
 
 
-    public String encrypt(String message){
-        return "";
+    public String encrypt(String message) throws Exception{
+        ArrayList<Integer> input=KeyValueMap.mapStringToValues(message);
+        ArrayList<Integer> output=new ArrayList<Integer>();
+        for (Integer i:input){
+            Integer temp=input.get(i);
+            for(Rotor rotor:rotors){
+                temp=rotor.encrypt(temp);
+            }
+            output.add(temp);
+        }
+        return KeyValueMap.mapValuesToString(output);
     }
 
-    public String decrypt(String ciphertext){
-        return "";
+    public String decrypt(String ciphertext) throws Exception{
+        ArrayList<Integer> input=KeyValueMap.mapStringToValues(ciphertext);
+        ArrayList<Integer> output=new ArrayList<Integer>();
+        for (Integer i:input){
+            Integer temp=input.get(i);
+            for(Integer j=rotors.size()-1;j>=0;j--){
+                Rotor reverseRotor=rotors.get(j);
+                temp=reverseRotor.decrypt(temp);
+            }
+            output.add(temp);
+        }
+        return KeyValueMap.mapValuesToString(output);
     }
 
     public Integer getSecretKey() {
