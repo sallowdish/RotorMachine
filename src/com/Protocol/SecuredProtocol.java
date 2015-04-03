@@ -13,7 +13,7 @@ public class SecuredProtocol {
     private static final int CLIENT_WAITING_SYNC = 1;
     private static final int SERVER_READY = 2;
     private static final int CLIENT_READY = 3;
-    public final String DELIMITER="#wetqew843&";
+    public final String DELIMITER="#wetqew843#";
 
     private static final int NUMJOKES = 5;
 
@@ -64,11 +64,13 @@ public class SecuredProtocol {
     public String processInput(String theInput) throws Exception{
         String theOutput = null;
 
-        if (state == SERVER_WAITING_SYNC) {
+        if (state == SERVER_WAITING_SYNC)
+        {
             String[] msg=null;
             if (theInput!=null) {
-                System.out.println("Received: "+theInput);
+//                System.out.println("Received: "+theInput);
                 msg = theInput.split(DELIMITER);
+                System.out.println("Unwrapped: "+msg[0]+":"+msg[1]);
             }
             if (msg==null || !msg[0].equals("SYNC") || msg.length!=2){
                 theOutput="Error. Wait for sync up secretKey";
@@ -88,14 +90,16 @@ public class SecuredProtocol {
         } else if (state == SERVER_READY) {
             String[] msg=null;
             if (theInput!=null) {
+//                System.out.println("Received: "+theInput);
                 msg = theInput.split(DELIMITER);
+//                System.out.println("Unwrapped: "+msg[0]+"-"+msg[1]);
             }
             if (msg==null || !msg[0].equals("DATA")||msg.length!=2){
                 theOutput="Error. Wait for encrypted message";
             }
             else{
                 EnigmaMachine m=new EnigmaMachine(secretKey);
-                System.out.println("Receive Message: "+msg[1]);
+//                System.out.println("Receive Message: "+msg[1]);
                 String message=m.decrypt(msg[1]);
                 System.out.println("Decrypted: "+message);
                 String reversedMsg= new StringBuilder(message).reverse().toString();
@@ -104,8 +108,9 @@ public class SecuredProtocol {
         } else if(state == CLIENT_WAITING_SYNC){
             String[] msg=null;
             if (theInput!=null) {
-                System.out.println("Received: "+theInput);
+//                System.out.println("Received: "+theInput);
                 msg = theInput.split(DELIMITER);
+                System.out.println("Unwrapped: "+msg[0]+":"+msg[1]);
             }
             if (msg==null || !msg[0].equals("SYNC") || msg.length!=2){
                 theOutput="SYNC"+DELIMITER+x1.toString();
@@ -125,25 +130,29 @@ public class SecuredProtocol {
         } else if(state==CLIENT_READY){
             String[] msg=null;
             if (theInput!=null) {
+//                System.out.println("Received: "+theInput);
                 msg = theInput.split(DELIMITER);
+//                System.out.println("Unwrapped: "+msg[0]+"-"+msg[1]);
             }
             if (msg==null || (!msg[0].equals("DATA")&&!msg[0].equals("INIT"))||msg.length!=2){
                 String err="Error. Wait for encrypted message";
                 System.err.println(err);
             }else if(msg[0].equals("INIT")){
-                Scanner in = new Scanner(System.in);
                 System.out.println("Input next message(end with 'Enter'):");
+                Scanner in = new Scanner(System.in);
                 theOutput="DATA"+DELIMITER+new EnigmaMachine(secretKey).encrypt(in.nextLine());
+//                in.close();
             }
             else{
                 EnigmaMachine m=new EnigmaMachine(secretKey);
-                System.out.println("Receive Message: "+msg[1]);
+//                System.out.println("Receive Message: "+msg[1]);
                 String message=m.decrypt(msg[1]);
                 System.out.println("Decrypted: "+message);
-                String reversedMsg= new StringBuilder(message).reverse().toString();
-                Scanner in = new Scanner(System.in);
+//                String reversedMsg= new StringBuilder(message).reverse().toString();
                 System.out.println("Input next message(end with 'Enter'):");
+                Scanner in = new Scanner(System.in);
                 theOutput="DATA"+DELIMITER+new EnigmaMachine(secretKey).encrypt(in.nextLine());
+//                in.close();
             }
         }
         else{
