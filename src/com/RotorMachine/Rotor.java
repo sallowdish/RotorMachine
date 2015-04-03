@@ -9,7 +9,7 @@ public class Rotor {
     ArrayList<Integer> outputPanel=null;
 
     private int hitCounter=0;
-    final int NUM_PIN=57; //subset of asiic table from 'A' to 'z'
+    final int NUM_PIN=128; //subset of asiic table from 'A' to 'z'
     Rotor previousRotor=null;
 
     //Indicating if rotor rotates for each input or trigger by other rotor
